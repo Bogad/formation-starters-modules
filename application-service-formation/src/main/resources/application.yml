@@ -16,4 +16,24 @@ spring:
     username: root
     password: admin
 
-    
+keycloak:
+  realm: dgsn
+  auth-server-url: http://localhost:8080/auth
+  resource: client-app
+  credentials:
+    secret: c648ae2a-fd5d-42dd-834e-d820a524d70a
+  principal-attribute: preferred_username
+  bearer-only: true
+
+keycloak-add-on:
+  disable-init-secured-actions: false
+  client-id: keycloak-rest-client
+  client-secret: d15b60c7-c901-4849-bc6c-085f593532d9
+  secured-actions:
+  - name: client.manage
+  - name: client.read
+    parent: client.manage
+  - name: client.write
+    parent: client.manage
+  unprotectedpaths:
+    - /public/**   
