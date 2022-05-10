@@ -38,3 +38,22 @@ keycloak-add-on:
   unprotectedpaths:
     - /public/**   
     
+datafiltering:  
+  entryDefs:
+ 
+  - name: ByLastNameEntry
+    classe: ma.co.omnidata.framework.services.datafiltering.parametrized.entries.GenericEntry
+    list:
+      - name: lastName
+        value: BOUAGGAD 
+  scenarioDefs:    
+  - scenarioName: lastNameScenario
+    entries:       
+     - entryName: ByLastNameEntry
+  assignmentDefs:
+      # class definition
+    - applyToClasse: "*Client"
+      applyToUsers:
+        - name: abo
+          scenario: lastNameScenario
+    
