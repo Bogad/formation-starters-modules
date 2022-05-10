@@ -10,11 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import ma.co.omnidata.framework.services.datafiltering.annotations.DataFiltered;
+
 /**
  * A Client.
  */
 @Entity
 @Table(name = "client")
+@DataFiltered
 public class Client implements Serializable {
 
 	private static final long serialVersionUID = 1L;

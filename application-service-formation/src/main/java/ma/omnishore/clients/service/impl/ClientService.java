@@ -1,6 +1,8 @@
 package ma.omnishore.clients.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +49,7 @@ public class ClientService implements IClientService {
 	@Transactional(readOnly = true)
 	public List<Client> getAllClients() {
 		log.debug("Request to get all Clients");
-		return clientRepository.findAll();
+		return StreamSupport.stream(clientRepository.findAll().spliterator(), false).collect(Collectors.toList());
 	}
 
 	/**

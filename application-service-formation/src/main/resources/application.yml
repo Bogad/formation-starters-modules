@@ -37,3 +37,4 @@ keycloak-add-on:
     parent: client.manage
   unprotectedpaths:
     - /public/**   
+    
