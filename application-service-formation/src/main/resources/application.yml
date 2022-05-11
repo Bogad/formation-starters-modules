@@ -39,8 +39,14 @@ keycloak-add-on:
     - /public/**   
     
 datafiltering:  
-  entryDefs:
- 
+  entryDefs: 
+  - name: ByCompanyEntryParam
+    classe: ma.co.omnidata.framework.services.datafiltering.parametrized.entries.GenericEntry
+    list:
+      - name: email
+        operator: like
+        value: "#company"
+        position: both
   - name: ByLastNameEntry
     classe: ma.co.omnidata.framework.services.datafiltering.parametrized.entries.GenericEntry
     list:
@@ -50,10 +56,14 @@ datafiltering:
   - scenarioName: lastNameScenario
     entries:       
      - entryName: ByLastNameEntry
+  - scenarioName: companyParamScenario
+    entries:       
+     - entryName: ByCompanyEntryParam
   assignmentDefs:
       # class definition
     - applyToClasse: "*Client"
       applyToUsers:
         - name: abo
-          scenario: lastNameScenario
+          #scenario: lastNameScenario
+          scenario: companyParamScenario
     

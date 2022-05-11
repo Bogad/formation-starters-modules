@@ -1,11 +1,14 @@
 package ma.omnishore.clients.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +25,8 @@ public class ClientService implements IClientService {
 
 	private final Logger log = LoggerFactory.getLogger(ClientService.class);
 
-	private final ClientRepository clientRepository;
-
-	public ClientService(ClientRepository clientRepository) {
-		this.clientRepository = clientRepository;
-	}
+	@Autowired
+	private ClientRepository clientRepository;
 
 	/**
 	 * Save a client.
@@ -49,7 +49,14 @@ public class ClientService implements IClientService {
 	@Transactional(readOnly = true)
 	public List<Client> getAllClients() {
 		log.debug("Request to get all Clients");
+		Map<String, Object> params = new HashMap<>();
+		params.put("company", "omnishore");
+		setParams(params);
 		return StreamSupport.stream(clientRepository.findAll().spliterator(), false).collect(Collectors.toList());
+	}
+
+	private void setParams(Map<String, Object> params) {
+		clientRepository.setParams(params);
 	}
 
 	/**
