@@ -44,7 +44,7 @@ datafiltering:
     classe: ma.co.omnidata.framework.services.datafiltering.parametrized.entries.GenericEntry
     list:
       - name: country.code
-        value: FR
+        value: "#connectedUorg"
   scenarioDefs:    
   - scenarioName: countryScenario
     entries:       
@@ -52,7 +52,7 @@ datafiltering:
   assignmentDefs:
       # class definition
     - applyToClasse: "*Client"
-      applyToUsers:
-        - name: abo
+      applyToRoles:
+        - name: user
           scenario: countryScenario
     
