@@ -40,30 +40,19 @@ keycloak-add-on:
     
 datafiltering:  
   entryDefs: 
-  - name: ByCompanyEntryParam
+  - name: ByCountryEntry
     classe: ma.co.omnidata.framework.services.datafiltering.parametrized.entries.GenericEntry
     list:
-      - name: email
-        operator: like
-        value: "#company"
-        position: both
-  - name: ByLastNameEntry
-    classe: ma.co.omnidata.framework.services.datafiltering.parametrized.entries.GenericEntry
-    list:
-      - name: lastName
-        value: BOUAGGAD 
+      - name: country.code
+        value: FR
   scenarioDefs:    
-  - scenarioName: lastNameScenario
+  - scenarioName: countryScenario
     entries:       
-     - entryName: ByLastNameEntry
-  - scenarioName: companyParamScenario
-    entries:       
-     - entryName: ByCompanyEntryParam
+     - entryName: ByCountryEntry
   assignmentDefs:
       # class definition
     - applyToClasse: "*Client"
       applyToUsers:
         - name: abo
-          #scenario: lastNameScenario
-          scenario: companyParamScenario
+          scenario: countryScenario
     
