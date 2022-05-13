@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ma.co.omnidata.framework.services.lock.exceptions.LockException;
 import ma.omnishore.clients.domain.Client;
 import ma.omnishore.clients.service.IClientService;
 
@@ -48,6 +49,15 @@ public class ClientController {
 		return new ResponseEntity<>(client, HttpStatus.OK);
 	}
 
+	// -------------------Load Single Client-----------------------------------------
+	@GetMapping(value = "/{id}/edit")
+	public ResponseEntity<?> loadClient(@PathVariable("id") long id) throws LockException {
+		Client client = new Client();
+		client.setId(id);
+		client = clientService.loadClient(client);
+		return new ResponseEntity<>(client, HttpStatus.OK);
+	}
+
 	// -------------------Create a Client-------------------------------------------
 	@PostMapping
 	public ResponseEntity<Client> createClient(@RequestBody Client client) {
@@ -57,7 +67,7 @@ public class ClientController {
 
 	// ------------------- Update a Client ------------------------------------------------
 	@PutMapping
-	public ResponseEntity<?> updateClient(@RequestBody Client client) {
+	public ResponseEntity<?> updateClient(@RequestBody Client client) throws LockException{
 		clientService.updateClient(client);
 		return new ResponseEntity<>(client, HttpStatus.OK);
 	}

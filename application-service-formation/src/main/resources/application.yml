@@ -38,21 +38,10 @@ keycloak-add-on:
   unprotectedpaths:
     - /public/**   
     
-datafiltering:  
-  entryDefs: 
-  - name: ByCountryEntry
-    classe: ma.co.omnidata.framework.services.datafiltering.parametrized.entries.GenericEntry
-    list:
-      - name: country.code
-        value: "#connectedUorg"
-  scenarioDefs:    
-  - scenarioName: countryScenario
-    entries:       
-     - entryName: ByCountryEntry
-  assignmentDefs:
-      # class definition
-    - applyToClasse: "*Client"
-      applyToRoles:
-        - name: user
-          scenario: countryScenario
+lock-service:
+  enabled: true
+  listener:
+    lockTimeout: 60000
+    frequency: 10000
+
     

@@ -10,7 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ma.co.omnidata.framework.services.datafiltering.annotations.DataFiltered;
+import ma.co.omnidata.framework.services.lock.ILockable;
 
 /**
  * A Client.
@@ -18,7 +21,7 @@ import ma.co.omnidata.framework.services.datafiltering.annotations.DataFiltered;
 @Entity
 @Table(name = "client")
 @DataFiltered
-public class Client implements Serializable {
+public class Client implements Serializable, ILockable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -82,6 +85,17 @@ public class Client implements Serializable {
 
 	public void setIdNumber(String idNumber) {
 		this.idNumber = idNumber;
+	}	
+
+	@Override
+	@JsonIgnore
+	public String getIdLockable() {
+		return this.id.toString();
 	}
 
+	@Override
+	@JsonIgnore
+	public String getLockableType() {
+		return this.getClass().getCanonicalName();
+	}
 }
