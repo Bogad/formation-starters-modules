@@ -36,7 +36,7 @@ public class Client implements Serializable, ILockable {
 	@Column(name = "email")
 	private String email;
 	@Column(name = "id_number")
-	@SequencedWith(code = "idNumberSeq", format = "[year]/[sequence]", step = "10")
+	@SequencedWith(code = "clientSeq")
 	private String idNumber;
 	@ManyToOne
 	private Country country;

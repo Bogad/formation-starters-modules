@@ -43,5 +43,16 @@ lock-service:
   listener:
     lockTimeout: 60000
     frequency: 10000
+    
+    
+sequence-service:
+  mapTokenGenerators:
+    uorg: "ma.co.omnidata.framework.services.sequence.tokengenerators.impl.UorgGenerator"
+    year: "ma.co.omnidata.framework.services.sequence.tokengenerators.impl.YearGenerator"
+    yearlySequence: "ma.co.omnidata.framework.services.sequence.tokengenerators.impl.YearlySequence"
+  mapConfigs:
+  - codeSeq: clientSeq
+    format: "CL-[uorg]-[year]/[yearlySequence]"
+    step: 1
 
     
