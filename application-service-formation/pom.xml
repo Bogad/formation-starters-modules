@@ -43,6 +43,10 @@
 			<artifactId>itarone-lock-starter</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>ma.co.omnidata.framework</groupId>
+			<artifactId>itarone-sequence-starter</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>

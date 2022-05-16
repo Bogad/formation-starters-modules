@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import ma.co.omnidata.framework.services.datafiltering.annotations.DataFiltered;
 import ma.co.omnidata.framework.services.lock.ILockable;
+import ma.co.omnidata.framework.services.sequence.annotations.SequencedWith;
 
 /**
  * A Client.
@@ -35,6 +36,7 @@ public class Client implements Serializable, ILockable {
 	@Column(name = "email")
 	private String email;
 	@Column(name = "id_number")
+	@SequencedWith(code = "idNumberSeq", format = "[year]/[sequence]", step = "10")
 	private String idNumber;
 	@ManyToOne
 	private Country country;
