@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: client-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   main:
      allow-bean-definition-overriding: true
   jpa:
@@ -55,4 +60,9 @@ sequence-service:
     format: "CL-[uorg]-[year]/[yearlySequence]"
     step: 1
 
+tracing-service:
+  queueName: tracingQueue
+  exchangeName: tracingExchange
+  routingKey: toTrace
+  tracePackage: ma.omnishore.clients.domain
     

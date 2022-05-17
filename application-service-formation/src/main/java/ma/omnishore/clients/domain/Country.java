@@ -9,12 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import ma.co.omnidata.framework.services.tracing.annotations.AttributeTrace;
+import ma.co.omnidata.framework.services.tracing.annotations.Traceable;
+
 
 /**
  * A country.
  */
 @Entity
 @Table(name = "country")
+@Traceable
 public class Country implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -25,6 +29,7 @@ public class Country implements Serializable {
 	@Column(name = "code")
 	private String code;
 	@Column(name = "label")
+	@AttributeTrace(key = "countryLabel", label = "libelle")
 	private String label;
 
 	public Long getId() {

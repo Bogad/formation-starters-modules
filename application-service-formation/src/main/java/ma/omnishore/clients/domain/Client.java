@@ -15,6 +15,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import ma.co.omnidata.framework.services.datafiltering.annotations.DataFiltered;
 import ma.co.omnidata.framework.services.lock.ILockable;
 import ma.co.omnidata.framework.services.sequence.annotations.SequencedWith;
+import ma.co.omnidata.framework.services.tracing.annotations.AttributeTrace;
+import ma.co.omnidata.framework.services.tracing.annotations.Traceable;
 
 /**
  * A Client.
@@ -22,6 +24,7 @@ import ma.co.omnidata.framework.services.sequence.annotations.SequencedWith;
 @Entity
 @Table(name = "client")
 @DataFiltered
+@Traceable
 public class Client implements Serializable, ILockable {
 
 	private static final long serialVersionUID = 1L;
@@ -29,16 +32,20 @@ public class Client implements Serializable, ILockable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@AttributeTrace(key = "lastName", label = "Nom")
 	@Column(name = "last_name")
 	private String lastName;
 	@Column(name = "first_name")
+	@AttributeTrace(key = "firstName", label = "Prénom")
 	private String firstName;
 	@Column(name = "email")
+	@AttributeTrace(key = "email", label = "Email")
 	private String email;
 	@Column(name = "id_number")
 	@SequencedWith(code = "clientSeq")
 	private String idNumber;
 	@ManyToOne
+	@AttributeTrace(key = "homeCountry", label = "Pays")
 	private Country country;
 
 	public Long getId() {

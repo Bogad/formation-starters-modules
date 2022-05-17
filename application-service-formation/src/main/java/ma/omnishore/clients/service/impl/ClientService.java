@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ma.co.omnidata.framework.services.lock.annotations.ItaroneLock;
 import ma.co.omnidata.framework.services.lock.annotations.ItaroneUnlock;
 import ma.co.omnidata.framework.services.lock.exceptions.LockException;
+import ma.co.omnidata.framework.services.tracing.annotations.MethodTrace;
 import ma.omnishore.clients.domain.Client;
 import ma.omnishore.clients.repository.ClientRepository;
 import ma.omnishore.clients.service.IClientService;
@@ -38,6 +39,7 @@ public class ClientService implements IClientService {
 	 * @return the persisted entity.
 	 */
 	@Override
+	@MethodTrace(key = "client.create", label = "Création Client")
 	public Client createClient(Client client) {
 		log.debug("Request to save Client : {}", client);
 		return clientRepository.save(client);
