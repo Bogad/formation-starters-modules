@@ -1,0 +1,19 @@
+server:
+  port: 9980
+
+spring:
+  application:
+    name: tracing-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+tracing-service:
+  elasticsearch: localhost:9200
+  queueName: tracingQueue
+
+cors:
+  enabled: true
+  allowedAdresses: http://localhost:8080, http://localhost:8081, http://localhost:3000}
