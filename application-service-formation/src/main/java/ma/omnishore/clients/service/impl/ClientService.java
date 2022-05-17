@@ -93,6 +93,7 @@ public class ClientService implements IClientService {
 	 */
 	@Override
 	@ItaroneUnlock
+	@MethodTrace(key = "client.update", label = "Modification Client", mode = "edit")
 	public Client updateClient(Client client) throws LockException{
 		log.debug("Request to update Client : {}", client);
 		if (!clientRepository.existsById(client.getId())) {

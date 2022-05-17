@@ -17,6 +17,9 @@ import ma.co.omnidata.framework.services.lock.ILockable;
 import ma.co.omnidata.framework.services.sequence.annotations.SequencedWith;
 import ma.co.omnidata.framework.services.tracing.annotations.AttributeTrace;
 import ma.co.omnidata.framework.services.tracing.annotations.Traceable;
+import ma.co.omnidata.framework.services.tracing.domain.ITraceable;
+import ma.omnishore.clients.config.SpringContextConfiguration;
+import ma.omnishore.clients.repository.ClientRepository;
 
 /**
  * A Client.
@@ -25,7 +28,7 @@ import ma.co.omnidata.framework.services.tracing.annotations.Traceable;
 @Table(name = "client")
 @DataFiltered
 @Traceable
-public class Client implements Serializable, ILockable {
+public class Client implements Serializable, ILockable, ITraceable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,7 +44,7 @@ public class Client implements Serializable, ILockable {
 	@Column(name = "email")
 	@AttributeTrace(key = "email", label = "Email")
 	private String email;
-	@Column(name = "id_number")
+	@Column(name = "id_number", updatable = false)
 	@SequencedWith(code = "clientSeq")
 	private String idNumber;
 	@ManyToOne
@@ -106,5 +109,11 @@ public class Client implements Serializable, ILockable {
 	@JsonIgnore
 	public String getLockableType() {
 		return this.getClass().getCanonicalName();
+	}
+
+	@Override
+	public ITraceable getEntityInstance(ITraceable entity) {
+		ClientRepository clientRepository = SpringContextConfiguration.getBean(ClientRepository.class);
+		return clientRepository.findById(id).orElse(null);
 	}
 }
