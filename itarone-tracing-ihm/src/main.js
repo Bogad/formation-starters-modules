@@ -7,6 +7,8 @@ import translations from "./resources/translations";
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import VueKeycloakJs from 'omni-vue-keycloak'
+
 
 var VueScrollTo = require("vue-scrollto");
 
@@ -37,9 +39,25 @@ const i18n = new VueI18n({
   messages: translations
 });
 
-new Vue({
-  router,
-  el: "#app",
-  i18n,
-  render: h => h(App)
+Vue.use(VueKeycloakJs, {
+  init: {
+     onLoad: 'check-sso'
+  },
+  config: {
+      url: process.env.VUE_APP_KEYCLOAK_URL,
+      clientId: process.env.VUE_APP_KEYCLOAK_CLIENT_ID,
+      realm: process.env.VUE_APP_KEYCLOAK_REALM
+  },
+  onReady: () => {
+      new Vue({
+          i18n,
+          router,
+          render: h => h(App)
+      }).$mount('#app')
+  }
 });
+
+
+
+
+

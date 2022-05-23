@@ -9,10 +9,18 @@ const routes = [
   {
     path: "/",
     component: Traces,
+    meta: {
+      requiresAuth: true
+    },
     children: [
       {
         path: "",
-        component: TraceForm
+        component: TraceForm,
+        meta: {
+          requiresAuth: true,
+          role: 'user'
+        }
+       
       }
     ]
   }
@@ -20,6 +28,28 @@ const routes = [
 const router = new Router({
   routes,
   mode: "history"
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (router.app.$keycloak.authenticated) {
+      if (to.meta.role) {
+        if (router.app.$keycloak.hasRealmRole(to.meta.role)) {
+          next();
+        } else {
+          alert('Access Denied');
+        }
+      } else {
+        next();
+      }
+
+    } else {
+      const loginUrl = router.app.$keycloak.createLoginUrl()
+      window.location.replace(loginUrl)
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
