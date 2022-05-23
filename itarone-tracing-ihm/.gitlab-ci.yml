@@ -1,0 +1,43 @@
+image: registry.devops.os/ci-tools/os-ci-nodejs
+
+cache:
+  key: "$CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME"
+  paths:
+    - node_modules
+
+stages:
+  - build
+  - test
+  - deploy
+  - publish-docker
+build:
+  stage: build
+  before_script:
+    - npm install
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist/*
+
+.deploy:
+  stage: deploy
+  only:
+    - tags
+  script:
+    - npm --no-git-tag-version version --allow-same-version $CI_BUILD_TAG
+    - npm publish
+
+
+build_image:
+  stage: publish-docker
+  image: docker:19
+  only:
+    - tags
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME  -f .docker/Dockerfile .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+
+
+
